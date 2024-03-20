@@ -1,0 +1,21 @@
+<style>
+    li.active > a {
+        font-weight: bold;
+        color: blue;
+    }
+    
+    li.active ul {
+        display: block;
+    }
+</style>
+
+{% for node in menu_tree %}
+    <li class="{% if node.is_active %}active{% endif %}">
+        <a href="{{ node.item.get_absolute_url }}">{{ node.item.name }}</a>
+        {% if node.children and node.is_open %}
+            <ul>
+                {% include "menu.html" with menu_tree=node.children %}
+            </ul>
+        {% endif %}
+    </li>
+{% endfor %}
